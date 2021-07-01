@@ -37,7 +37,7 @@ app.get('/hand', (req, res) => {
   if (!users[user][deck]) {
     addDeck(user, deck)
   }
-  console.log('/hand', user, deck, users[user][deck]);
-  console.log('/hand', users.Someone.practiceDeck)
+  // console.log('/hand', user, deck, users[user][deck]);
+  // console.log('/hand', users.Someone.practiceDeck)
   res.send(users[user][deck]);
 })

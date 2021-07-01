@@ -34,7 +34,8 @@ class App extends React.Component {
     .then(state => {
       console.log('this.state???', state)
     })
-    // setInterval(this.checkForUpdates(), 5000);
+    this.checkForUpdates = this.checkForUpdates.bind(this);
+    setInterval(this.checkForUpdates, 2000);
   }
 
   restart() {
