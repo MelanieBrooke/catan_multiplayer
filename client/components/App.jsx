@@ -4,6 +4,7 @@ import Cards from './Cards.jsx';
 import Hand from './Hand.jsx';
 import Played from './Played.jsx';
 import played from './played.modules.css';
+import app from './app.modules.css';
 
 class App extends React.Component {
   constructor(props) {
@@ -141,10 +142,10 @@ class App extends React.Component {
     })
   }
 
-  cardPlayed(user, card) {
-    // create pop up on all screens
-    // display card and who played it
-  }
+  // cardPlayed(user, card) {
+  //   // create pop up on all screens
+  //   // display card and who played it
+  // }
 
   handleClick(e) {
     e.preventDefault();
@@ -153,14 +154,10 @@ class App extends React.Component {
       userClosed: true
     });
     setTimeout(() => {
-      // console.log('set Timeout function');
-      // axios.post('/hide');
       this.setState({
-        // cardDisplay: false,
         userClosed: false
       })
     }, 5000);
-    // axios.post('/hide', {});
   }
 
   render() {
@@ -182,7 +179,9 @@ class App extends React.Component {
         <Cards draw={this.draw}/>
         <br></br>
         <br></br>
+        <div className={app.img}>
         <Hand cards={this.state.hand} discard={this.discard}/>
+        </div>
       </div>
     );
   }

@@ -56,3 +56,9 @@
   background-color: #44519A;
   cursor: pointer;
 }
+
+.image {
+  width: 400px;
+  height: 600px;
+  object-fit: contain;
+}
