@@ -8,6 +8,10 @@ app.use(express.static('public'));
 
 const { newGame, draw, discard } = require('./cards.js');
 const { users, addUser, addCard, removeCard, addDeck } = require('./user.js');
+const {newResources,
+  drawResource,
+  spendResource,
+  resources} = require('./resources');
 
 app.listen(port, () => {
   console.log(`listening at port ${port}`);
@@ -16,13 +20,16 @@ app.listen(port, () => {
 app.get('/start', (req, res) => {
   played.display = false;
   newGame();
+  newResources();
   res.send('game started')
 })
 
 app.get('/cards', (req, res) => {
   var user = req.query.user;
   var card = draw();
-  addCard(user, card);
+  if (card) {
+    addCard(user, card);
+  }
   res.send(card);
 })
 
@@ -58,4 +65,38 @@ app.post('/discard', (req, res) => {
 
 app.post('/hide', (req, res) => {
   played = {user:null, card:null, display: false}
+})
+
+app.get('/resource', (req, res) => {
+  var resource = req.query.resource;
+  var user = req.query.user;
+  if (resources[resource] === 0) {
+    res.send('empty')
+  }
+  drawResource(user, resource);
+  res.send(resource);
+})
+
+app.post('/resource', (req, res) => {
+  var resource = req.body.resource;
+  var user = req.body.user;
+  spendResource(user, resource);
+  res.send(resource);
+})
+
+app.get('/resources', (req, res) => {
+  var user = req.query.user;
+  if (!users[user]) {
+    addUser(user);
+  }
+  res.send({
+    user:{
+      sheep: users[user].sheep,
+      lumber: users[user].lumber,
+      brick: users[user].brick,
+      wheat: users[user].wheat,
+      ore: users[user].ore
+    },
+    deck:resources
+  })
 })

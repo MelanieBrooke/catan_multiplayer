@@ -46,6 +46,7 @@ const discard = (card, deck=catanGameDeck) => {
   deck.push(card);
 }
 
+
 module.exports = {
   tempDeck,
   catanGameDeck,

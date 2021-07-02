@@ -10,7 +10,13 @@ const resetUsers = () => {
 }
 
 const addUser = (userName) => {
-  users[userName] = {}
+  users[userName] = {
+    sheep: 0,
+    lumber: 0,
+    brick: 0,
+    wheat: 0,
+    ore: 0
+  }
 }
 
 const addDeck = (user, deck) => {

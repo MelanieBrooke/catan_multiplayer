@@ -6,6 +6,7 @@ import Played from './Played.jsx';
 import played from './played.modules.css';
 import app from './app.modules.css';
 import Drawn from './Drawn.jsx';
+import Resources from './Resources.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -17,7 +18,14 @@ class App extends React.Component {
       userClosed: false,
       discard: {user: null, card: null},
       drawDisplay: false,
-      drawn: null
+      drawn: null,
+      resources: {
+        sheep: {deck: 0, user: 0},
+        lumber: {deck: 0, user: 0},
+        brick: {deck: 0, user: 0},
+        wheat: {deck: 0, user: 0},
+        ore: {deck: 0, user: 0},
+      }
     };
     this.draw = this.draw.bind(this);
     this.restart = this.restart.bind(this);
@@ -26,6 +34,8 @@ class App extends React.Component {
     this.displayCardToPlayers = this.displayCardToPlayers.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.drawResource = this.drawResource.bind(this);
+    this.spendResource = this.spendResource.bind(this);
   };
 
   componentDidMount() {
@@ -50,6 +60,46 @@ class App extends React.Component {
     })
     this.checkForUpdates = this.checkForUpdates.bind(this);
     setInterval(this.checkForUpdates, 1000);
+  }
+
+  drawResource(e) {
+    var resource = e.target.value;
+    axios.get('/resource', {params: {
+      resource:resource,
+      user: this.state.user}
+    })
+    .then(response => {
+      this.checkForUpdates();
+    })
+  }
+
+  spendResource(e) {
+    var r = e.target.value;
+    axios.post('/resource', {
+      resource:r,
+      user: this.state.user
+    })
+    .then(response => {
+      this.checkForUpdates();
+    })
+  }
+
+  seeResources() {
+    axios.get('/resources', {params: {
+      user:this.state.user
+    }})
+    .then(response => {
+      // console.log('get hand response', response.data);
+      this.setState({
+        resources:{
+          sheep:{user:response.data.user.sheep, deck:response.data.deck.sheep},
+          lumber:{user:response.data.user.lumber, deck:response.data.deck.lumber},
+          brick:{user:response.data.user.brick, deck:response.data.deck.brick},
+          wheat:{user:response.data.user.wheat, deck:response.data.deck.wheat},
+          ore:{user:response.data.user.ore, deck:response.data.deck.ore},
+        }
+      })
+    })
   }
 
   displayCardToPlayers(card, user) {
@@ -117,6 +167,7 @@ class App extends React.Component {
 
   // until I learn sockets
   checkForUpdates() {
+    this.seeResources();
     // console.log('called');
     axios.get('/played')
     .then(results => {
@@ -193,7 +244,12 @@ class App extends React.Component {
         <br></br>
         <br></br>
         <div className={app.img}>
-        <Hand cards={this.state.hand} discard={this.discard}/>
+          <Resources
+          resources={this.state.resources}
+          draw={this.drawResource}
+          spend={this.spendResource}
+          />
+          <Hand cards={this.state.hand} discard={this.discard}/>
         </div>
       </div>
     );
