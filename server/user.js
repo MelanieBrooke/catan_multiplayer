@@ -1,19 +1,16 @@
 const cards = require('./cards.js');
-const {practiceDeck} = require('./decks.js');
+const {alphabetDeck, catanDevelopmentDeck} = require('./decks.js');
 
 const users = {};
 
 const resetUsers = () => {
   for (var userName in users) {
-    // console.log('userName', userName);
-    // console.log('users[userName]', users[userName]);
     users[userName] = {};
   }
 }
 
 const addUser = (userName) => {
   users[userName] = {}
-  // user.push(userInfo);
 }
 
 const addDeck = (user, deck) => {
@@ -22,18 +19,17 @@ const addDeck = (user, deck) => {
   }
 }
 
-const addCard = (name, card, deck='practiceDeck') => {
+const addCard = (name, card, deck='catanDevelopmentDeck') => {
   if (!users[name]) {
     addUser(name);
   }
   if (!users[name][deck]) {
     users[name][deck] = [];
   }
-  console.log('users[name][deck]:', users[name][deck])
   users[name][deck].push(card);
 }
 
-const removeCard = (name, card, deck='practiceDeck') => {
+const removeCard = (name, card, deck='catanDevelopmentDeck') => {
   var cardIndex = users[name][deck].indexOf(card);
   users[name][deck].splice(cardIndex, 1);
 }

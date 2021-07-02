@@ -1,11 +1,16 @@
 const {resetUsers} = require('./user.js');
-const { practiceDeck } = require('./decks.js');
+const { alphabetDeck, catanDevelopmentDeck } = require('./decks.js');
 
 var tempDeck = [];
+var catanGameDeck = [];
 
-const newGame = (deck=practiceDeck) => {
+const newGame = (deck=catanDevelopmentDeck) => {
   var gameDeck = deck.slice();
-  tempDeck = shuffle(gameDeck);
+  if (deck=catanDevelopmentDeck) {
+    catanGameDeck = shuffle(gameDeck);
+  } else if (deck=alphabetDeck) {
+    tempDeck = shuffle(gameDeck);
+  }
   resetUsers();
 }
 
@@ -25,7 +30,7 @@ const pile = (deck) => {
   return deck.length;
 }
 
-const draw = (deck=tempDeck) => {
+const draw = (deck=catanGameDeck) => {
   // draw top card (first in array)
   if (pile(deck)) {
     let drawn = deck[0];
@@ -36,13 +41,14 @@ const draw = (deck=tempDeck) => {
   }
 }
 
-const discard = (deck, card) => {
+const discard = (card, deck=catanGameDeck) => {
   // put card back on bottom of deck
   deck.push(card);
 }
 
 module.exports = {
   tempDeck,
+  catanGameDeck,
   newGame,
   shuffle,
   draw,

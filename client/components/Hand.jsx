@@ -7,7 +7,7 @@ const Hand = (props) => {
       Cards:
       {/* {props.cards} */}
       <ul>{props.cards.map(card =>
-        <DisplayHand card={card} />
+        <DisplayHand card={card} discard={props.discard}/>
       )}</ul>
     </div>
   );
