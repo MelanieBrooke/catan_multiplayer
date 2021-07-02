@@ -5,6 +5,7 @@ import Hand from './Hand.jsx';
 import Played from './Played.jsx';
 import played from './played.modules.css';
 import app from './app.modules.css';
+import Drawn from './Drawn.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -14,7 +15,9 @@ class App extends React.Component {
       hand: [],
       cardDisplay: false,
       userClosed: false,
-      discard: {user: null, card: null}
+      discard: {user: null, card: null},
+      drawDisplay: false,
+      drawn: null
     };
     this.draw = this.draw.bind(this);
     this.restart = this.restart.bind(this);
@@ -22,6 +25,7 @@ class App extends React.Component {
     this.checkForUpdates = this.checkForUpdates.bind(this);
     this.displayCardToPlayers = this.displayCardToPlayers.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   };
 
   componentDidMount() {
@@ -93,7 +97,7 @@ class App extends React.Component {
   draw() {
     axios.get('/cards',
       {params: {
-        user: this.state.user,
+        user: this.state.user
       }}
     )
     .then(card => {
@@ -103,7 +107,9 @@ class App extends React.Component {
       } else {
         this.state.hand.push(card.data);
         this.setState({
-          hand: this.state.hand
+          hand: this.state.hand,
+          drawDisplay: true,
+          drawn: card.data
         })
       }
     })
@@ -142,11 +148,6 @@ class App extends React.Component {
     })
   }
 
-  // cardPlayed(user, card) {
-  //   // create pop up on all screens
-  //   // display card and who played it
-  // }
-
   handleClick(e) {
     e.preventDefault();
     this.setState({
@@ -160,6 +161,13 @@ class App extends React.Component {
     }, 5000);
   }
 
+  handleClose(e) {
+    e.preventDefault();
+    this.setState({
+      drawDisplay: false
+    })
+  }
+
   render() {
     return(
       <div className={played.body}>
@@ -168,6 +176,11 @@ class App extends React.Component {
         playedBy={this.state.discard.user}
         cardPlayed={this.state.discard.card}
         handleClick={this.handleClick}
+        />
+        <Drawn
+        drawDisplay={this.state.drawDisplay}
+        handleClose={this.handleClose}
+        cardDrawn={this.state.drawn}
         />
         <h1>Settlers of Catan Development Card Tracker</h1>
         <br></br>
