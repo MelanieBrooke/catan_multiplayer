@@ -63,9 +63,13 @@ class App extends React.Component {
   }
 
   drawResource(e) {
-    var resource = e.target.value;
+    var r = e.target.value;
+    var num = this.state.resources[r].deck;
+    if (num <= 0) {
+      return;
+    }
     axios.get('/resource', {params: {
-      resource:resource,
+      resource:r,
       user: this.state.user}
     })
     .then(response => {
@@ -75,6 +79,10 @@ class App extends React.Component {
 
   spendResource(e) {
     var r = e.target.value;
+    var num = this.state.resources[r].user;
+    if (num <= 0) {
+      return;
+    }
     axios.post('/resource', {
       resource:r,
       user: this.state.user
@@ -233,23 +241,23 @@ class App extends React.Component {
         handleClose={this.handleClose}
         cardDrawn={this.state.drawn}
         />
-        <h1>Settlers of Catan Development Card Tracker</h1>
+        <h1>Settlers of Catan Card Tracker</h1>
         <br></br>
         <br></br>
         <h3>Welcome, {this.state.user}</h3>
-        <button onClick={this.restart}>Reset Deck</button>
+        <button onClick={this.restart}>Start New Game</button>
         <br></br>
         <br></br>
         <Cards draw={this.draw}/>
         <br></br>
         <br></br>
         <div className={app.img}>
+          <Hand cards={this.state.hand} discard={this.discard}/>
           <Resources
           resources={this.state.resources}
           draw={this.drawResource}
           spend={this.spendResource}
           />
-          <Hand cards={this.state.hand} discard={this.discard}/>
         </div>
       </div>
     );

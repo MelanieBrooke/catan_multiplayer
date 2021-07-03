@@ -3,3 +3,9 @@
   height: 120px;
   object-fit: contain;
 }
+
+.development {
+  /* display: inline-block; */
+  float:left;
+  padding-right: 50px;
+}
