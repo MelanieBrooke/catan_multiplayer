@@ -12,7 +12,7 @@ const Played = (props) => {
     return (
       <div className={played.bg}>
         <div className={played.content_box}>
-        <span class={played.close} onClick={props.handleClick}>&times;</span>
+        {/* <span class={played.close} onClick={props.handleClick}>&times;</span> */}
         <h3>{cardText} was discarded by {props.playedBy}</h3>
         <br></br>
         <img className={played.image} src={props.cardPlayed} alt={props.cardPlayed}></img>

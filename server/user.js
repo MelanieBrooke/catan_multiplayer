@@ -5,7 +5,13 @@ const users = {};
 
 const resetUsers = () => {
   for (var userName in users) {
-    users[userName] = {};
+    users[userName] = {
+      sheep: 0,
+      lumber: 0,
+      brick: 0,
+      wheat: 0,
+      ore: 0
+    };
   }
 }
 

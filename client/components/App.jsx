@@ -15,7 +15,7 @@ class App extends React.Component {
       user: null,
       hand: [],
       cardDisplay: false,
-      userClosed: false,
+      // userClosed: false,
       discard: {user: null, card: null},
       drawDisplay: false,
       drawn: null,
@@ -32,7 +32,7 @@ class App extends React.Component {
     this.discard = this.discard.bind(this);
     this.checkForUpdates = this.checkForUpdates.bind(this);
     this.displayCardToPlayers = this.displayCardToPlayers.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.drawResource = this.drawResource.bind(this);
     this.spendResource = this.spendResource.bind(this);
@@ -123,8 +123,7 @@ class App extends React.Component {
       console.log('set Timeout function');
       axios.post('/hide');
       this.setState({
-        cardDisplay: false,
-        userClosed: false
+        cardDisplay: false
       })
     }, 5000);
   }
@@ -179,19 +178,13 @@ class App extends React.Component {
     // console.log('called');
     axios.get('/played')
     .then(results => {
-      if (this.state.userClosed === true) {
-        this.setState({
-          cardDisplay: false
-        });
-      } else {
-        this.setState({
-          cardDisplay: results.data.display,
-          discard: {
-            user: results.data.user,
-            card: results.data.card
-          }
-        })
-      }
+      this.setState({
+        cardDisplay: results.data.display,
+        discard: {
+          user: results.data.user,
+          card: results.data.card
+        }
+      })
     })
     axios.get('/hand', {
       params: {
@@ -207,18 +200,18 @@ class App extends React.Component {
     })
   }
 
-  handleClick(e) {
-    e.preventDefault();
-    this.setState({
-      cardDisplay: false,
-      userClosed: true
-    });
-    setTimeout(() => {
-      this.setState({
-        userClosed: false
-      })
-    }, 5000);
-  }
+  // handleClick(e) {
+  //   e.preventDefault();
+  //   this.setState({
+  //     cardDisplay: false,
+  //     userClosed: true
+  //   });
+  //   setTimeout(() => {
+  //     this.setState({
+  //       userClosed: false
+  //     })
+  //   }, 5000);
+  // }
 
   handleClose(e) {
     e.preventDefault();
@@ -234,7 +227,7 @@ class App extends React.Component {
         cardDisplay={this.state.cardDisplay}
         playedBy={this.state.discard.user}
         cardPlayed={this.state.discard.card}
-        handleClick={this.handleClick}
+        // handleClick={this.handleClick}
         />
         <Drawn
         drawDisplay={this.state.drawDisplay}

@@ -2,14 +2,18 @@ import React from 'react';
 import style from './resources.modules.css';
 
 const Resources = (props) => {
-  // var total = 0;
-  // console.log(typeof props.resources.sheep.user)
-  var total = Number(props.resources.sheep.user) + Number(props.resources.lumber.user) + Number(props.resources.brick.user) + Number(props.resources.wheat.user) + Number(props.resources.ore.user);
+
   return (<div className={style.development}>
     <table>
       <thead>
         <th><h3>Resource Cards:</h3></th>
-        <th><h3>{total}</h3></th>
+        <th><h3>{
+          props.resources.sheep.user +
+          props.resources.lumber.user +
+          props.resources.brick.user +
+          props.resources.wheat.user +
+          props.resources.ore.user
+          }</h3></th>
       </thead>
       <tbody>
         <tr>
