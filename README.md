@@ -4,4 +4,4 @@ App will start by just tracking cards drawn and players will manage their own bo
 
 This is not intended to replace the board game or the computer game, but rather to allow players who own the game to be able to play together online.
 
-I do not own any rights to Catan and do not intend to share this publicly or try to make any kind of profit.
+I do not own any rights to Catan and do not intend to try to make any kind of profit or use it to replace purchasing a copy of the game.
